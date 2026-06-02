@@ -60,6 +60,8 @@ class Emails {
 
 		add_action( 'dlm_email_customer_deliver_licenses', array( $this, 'deliverLicenses' ), 10, 2 );
 
+		add_filter( 'dlm_emails_license_key_markup', array( $this, 'renderPreviewLicenseKeyMarkup' ), 10, 3 );
+
 	}
 
 	/**
@@ -262,5 +264,22 @@ class Emails {
 				Controller::getTemplatePath()
 			);
 		}
+	}
+
+	/**
+	 * Renders a placeholder license key during WooCommerce email preview.
+	 *
+	 * @param string|null $markup  Existing markup.
+	 * @param mixed       $license License model.
+	 * @param string      $mode    Display mode.
+	 *
+	 * @return string|null
+	 */
+	public function renderPreviewLicenseKeyMarkup( $markup, $license, $mode ) {
+		if ( null !== $markup || ! apply_filters( 'woocommerce_is_email_preview', false ) ) {
+			return $markup;
+		}
+
+		return '<code>XXXX-XXXX-XXXX-XXXX</code>';
 	}
 }

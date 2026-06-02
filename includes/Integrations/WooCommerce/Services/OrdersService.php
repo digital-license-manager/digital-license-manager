@@ -34,14 +34,26 @@ class OrdersService {
 	/**
 	 * Returns the order item licenses determined by WooCommerce structure (the old way)
 	 *
-	 * @param \WC_Order_Item_Product $product
+	 * @param \WC_Order_Item_Product $order_item_product Order line item.
+	 * @param \WC_Order|null         $order              Optional order when the line item cannot resolve it (e.g. email preview).
 	 *
 	 * @return License[]|\IdeoLogix\DigitalLicenseManager\Abstracts\AbstractDataModel[]
 	 */
-	public function getOrderItemLicensesRaw( \WC_Order_Item_Product $order_item_product ) {
+	public function getOrderItemLicensesRaw( \WC_Order_Item_Product $order_item_product, $order = null ) {
 
-		$order   = $order_item_product->get_order();
+		if ( ! $order instanceof \WC_Order ) {
+			$order = $order_item_product->get_order();
+		}
+
+		if ( ! $order ) {
+			return [];
+		}
+
 		$product = $order_item_product->get_product();
+
+		if ( ! $product ) {
+			return [];
+		}
 
 		$query = apply_filters(
 			'dlm_admin_get_order_licenses_query',
