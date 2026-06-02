@@ -61,7 +61,7 @@ class AddOrderItemLicenses extends AbstractCommand {
 			$query = wc_get_orders( $this->get_args( $currPage ) );
 
 			if ( null === $progressBar ) {
-				$progressBar = \WP_CLI\Utils\make_progress_bar( __( 'Processing orders' ), $query->total );
+				$progressBar = \WP_CLI\Utils\make_progress_bar( __( 'Processing orders', 'digital-license-manager' ), $query->total );
 			}
 
 			foreach ( $query->orders as $i => $order ) {

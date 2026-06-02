@@ -281,7 +281,7 @@ class Orders {
 				}
 
 			} else {
-				$log_msg = sprintf( __( 'License delivery failed: Could not find enough licenses in stock (Current stock: %d | Required %d).' ), $availableStock, $neededAmount );
+				$log_msg = sprintf( __( 'License delivery failed: Could not find enough licenses in stock (Current stock: %d | Required %d).', 'digital-license-manager' ), $availableStock, $neededAmount );
 			}
 
 			$order->add_order_note( $log_msg );

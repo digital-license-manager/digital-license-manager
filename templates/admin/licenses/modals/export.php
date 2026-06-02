@@ -44,7 +44,7 @@ $columns = \IdeoLogix\DigitalLicenseManager\Controllers\Licenses::exportColumns(
                 </header>
                 <main class="modal__content" id="<?php echo esc_attr($modal_id); ?>-content">
                     <div class="dlm-form-row">
-                        <label><?php esc_html_e( 'Columns' ); ?></label>
+                        <label><?php esc_html_e( 'Columns', 'digital-license-manager' ); ?></label>
 						<?php foreach ( $columns as $column ): ?>
                             <p class="dlm-checkbox-row">
                                 <label>

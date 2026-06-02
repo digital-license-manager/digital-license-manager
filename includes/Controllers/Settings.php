@@ -228,7 +228,7 @@ class Settings {
 					'{{DATE_FORMAT}}',
 					'{{TIME_FORMAT}}',
 					esc_url( admin_url( 'options-general.php' ) ),
-					__( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.' )
+					__( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.', 'digital-license-manager' )
 				),
 				'label_for' => 'expiration_format',
 				'size'      => 40,
@@ -574,7 +574,7 @@ class Settings {
 	public function handleToolProcess() {
 
 		if ( ! check_ajax_referer( 'dlm-tools', '_wpnonce', false ) || ! current_user_can( 'dlm_manage_settings' ) ) {
-			wp_send_json_error( [ 'message' => __( 'Permission denied.' ) ] );
+			wp_send_json_error( [ 'message' => __( 'Permission denied.', 'digital-license-manager' ) ] );
 			exit;
 		} else {
 
@@ -583,7 +583,7 @@ class Settings {
 			$tool_slug = isset( $_POST['tool'] ) ? sanitize_text_field( wp_unslash( $_POST['tool'] ) ) : null;
 			$tool_id   = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : null;
 			if ( is_null( $tool_slug ) || ! isset( $this->tools[ $tool_slug ] ) ) {
-				wp_send_json_error( [ 'message' => __( 'Unknown tool selected.' ) ] );
+				wp_send_json_error( [ 'message' => __( 'Unknown tool selected.', 'digital-license-manager' ) ] );
 				exit;
 			}
 
@@ -638,7 +638,7 @@ class Settings {
 	 */
 	public function handleToolStatus() {
 		if ( ! check_ajax_referer( 'dlm-tools', '_wpnonce', false ) || ! current_user_can( 'dlm_manage_settings' ) ) {
-			wp_send_json_error( [ 'message' => __( 'Permission denied.' ) ] );
+			wp_send_json_error( [ 'message' => __( 'Permission denied.', 'digital-license-manager' ) ] );
 			exit;
 		} else {
 
@@ -661,7 +661,7 @@ class Settings {
 	 */
 	public function handleToolUndo() {
 		if ( ! check_ajax_referer( 'dlm-tools', '_wpnonce', false ) || ! current_user_can( 'dlm_manage_settings' ) ) {
-			wp_send_json_error( [ 'message' => __( 'Permission denied.' ) ] );
+			wp_send_json_error( [ 'message' => __( 'Permission denied.', 'digital-license-manager' ) ] );
 			exit;
 		} else {
 			$this->loadTools();
@@ -673,7 +673,7 @@ class Settings {
 				delete_option( 'nc_info_dlm_lmfwc' );
 				wp_send_json_success();
 			} else {
-				wp_send_json_error( [ 'message' => __( 'Operation Error.' ) ] );
+				wp_send_json_error( [ 'message' => __( 'Operation Error.', 'digital-license-manager' ) ] );
 			}
 			exit;
 		}

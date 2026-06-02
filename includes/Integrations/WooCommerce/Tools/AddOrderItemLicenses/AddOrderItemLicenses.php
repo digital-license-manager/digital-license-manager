@@ -107,7 +107,7 @@ class AddOrderItemLicenses extends AbstractTool {
 
 				$results = wc_get_orders( $query );
 				if ( empty( $results->orders ) ) {
-					return new \WP_Error( 'not_found', sprintf( __( 'No orders found for step "%s", page "%s"' ), $step, $page ) );
+					return new \WP_Error( 'not_found', sprintf( __( 'No orders found for step "%s", page "%s"', 'digital-license-manager' ), $step, $page ) );
 				}
 
 				$orderService = new OrdersService();

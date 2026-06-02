@@ -256,7 +256,7 @@ class LicensesService implements ServiceInterface, MetadataInterface {
 	public function createMultiple( $keys, $params ) {
 
 		if ( ! is_array( $keys ) || empty( $keys ) ) {
-			return new WP_Error( 'data_error', __( 'No keys provided.' ) );
+			return new WP_Error( 'data_error', __( 'No keys provided.', 'digital-license-manager' ) );
 		}
 
 		$keys      = array_map( 'sanitize_text_field', $keys );
@@ -276,12 +276,12 @@ class LicensesService implements ServiceInterface, MetadataInterface {
 
 		// Validate status
 		if ( is_null( $status ) ) {
-			return new WP_Error( 'data_error', __( 'No valid status provided.' ) );
+			return new WP_Error( 'data_error', __( 'No valid status provided.', 'digital-license-manager' ) );
 		}
 
 		// Validate source
 		if ( is_null( $source ) ) {
-			return new WP_Error( 'data_error', __( 'No valid source provided.' ) );
+			return new WP_Error( 'data_error', __( 'No valid source provided.', 'digital-license-manager' ) );
 		}
 
 		// Filter for dups
