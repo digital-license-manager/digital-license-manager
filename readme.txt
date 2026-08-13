@@ -3,7 +3,7 @@ Contributors: darkog, codeverve
 Tags: license key, license manager, software license, serial key, woocommerce
 Requires at least: 4.7
 Requires PHP: 7.0
-Tested up to: 6.8
+Tested up to: 7.1
 Stable tag: 1.8.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
