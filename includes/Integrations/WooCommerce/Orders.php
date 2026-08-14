@@ -281,7 +281,7 @@ class Orders {
 				}
 
 			} else {
-				$log_msg = sprintf( __( 'License delivery failed: Could not find enough licenses in stock (Current stock: %d | Required %d).' ), $availableStock, $neededAmount );
+				$log_msg = sprintf( __( 'License delivery failed: Could not find enough licenses in stock (Current stock: %d | Required %d).', 'digital-license-manager' ), $availableStock, $neededAmount );
 			}
 
 			$order->add_order_note( $log_msg );
@@ -724,7 +724,7 @@ class Orders {
 
 			$product      = $item->get_product();
 			$orderService = new OrdersService();
-			$licenses     = $orderService->getOrderItemLicensesRaw( $item );
+			$licenses     = $orderService->getOrderItemLicensesRaw( $item, $order );
 
 			if ( empty( $licenses ) ) {
 				continue;
@@ -736,9 +736,62 @@ class Orders {
 			];
 		}
 
+		if ( empty( $data ) && apply_filters( 'woocommerce_is_email_preview', false ) ) {
+			$data = self::getPreviewLicenses( $order );
+		}
+
 		$args['data'] = $data;
 
 		return $args;
+	}
+
+	/**
+	 * Builds placeholder license rows for WooCommerce email preview.
+	 *
+	 * @param WC_Order $order Dummy or real order used in preview.
+	 *
+	 * @return array{ name: string, keys: License[] }[]
+	 */
+	private static function getPreviewLicenses( WC_Order $order ) {
+		$data  = array();
+		$index = 0;
+
+		/** @var WC_Order_Item_Product $item */
+		foreach ( $order->get_items() as $item ) {
+			$product = $item->get_product();
+
+			if ( ! $product ) {
+				continue;
+			}
+
+			// In preview, dummy products might not have an ID (ID = 0).
+			// We need a unique array key to prevent overwriting.
+			$product_id = $product->get_id();
+			if ( ! $product_id ) {
+				$product_id = 'preview-' . $index;
+			}
+
+			$licenses = array();
+			$quantity = max( 1, (int) $item->get_quantity() );
+
+			for ( $i = 0; $i < $quantity; $i++ ) {
+				$licenses[] = new License(
+					array(
+						'license_key' => 'preview',
+						'expires_at'  => gmdate( 'Y-m-d H:i:s', strtotime( '+1 year' ) ),
+					)
+				);
+			}
+
+			$data[ $product_id ] = array(
+				'name' => $product->get_name(),
+				'keys' => $licenses,
+			);
+
+			$index++;
+		}
+
+		return $data;
 	}
 
 	/**
