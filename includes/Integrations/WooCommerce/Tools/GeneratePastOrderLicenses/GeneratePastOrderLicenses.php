@@ -138,7 +138,7 @@ class GeneratePastOrderLicenses extends AbstractTool {
 
 				$results = wc_get_orders( $query );
 				if ( empty( $results->orders ) ) {
-					return new \WP_Error( 'not_found', sprintf( __( 'No orders found for step "%s", page "%s"' ), $step, $page ) );
+					return new \WP_Error( 'not_found', sprintf( __( 'No orders found for step "%s", page "%s"', 'digital-license-manager' ), $step, $page ) );
 				}
 				$generatorId    = isset( $_POST['generator'] ) ? intval( $_POST['generator'] ) : 0;
 				$useProductConf = isset( $_POST['use_product_licensing_configuration'] ) ? intval( $_POST['use_product_licensing_configuration'] ) : 0;
@@ -230,7 +230,7 @@ class GeneratePastOrderLicenses extends AbstractTool {
 				if ( empty( $results->orders ) ) {
 					$this->deleteTemporaryData();
 
-					return new \WP_Error( 'not_found', sprintf( __( 'No orders found for step "%s", page "%s"' ), $step, $page ) );
+					return new \WP_Error( 'not_found', sprintf( __( 'No orders found for step "%s", page "%s"', 'digital-license-manager' ), $step, $page ) );
 				}
 
 				foreach ( $results->orders as $order ) {
